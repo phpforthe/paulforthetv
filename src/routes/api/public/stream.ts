@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-const ALLOWED_HOSTS = new Set(["tvsrv.co", "www.tvsrv.co"]);
+
 const UA =
   "Mozilla/5.0 (Web0S; Linux/SmartTV) AppleWebKit/537.36 Chrome/108 Safari/537.36";
 
@@ -45,8 +45,8 @@ export const Route = createFileRoute("/api/public/stream")({
         } catch {
           return new Response("Bad URL", { status: 400 });
         }
-        if (!/^https?:$/.test(target.protocol) || !ALLOWED_HOSTS.has(target.hostname)) {
-          return new Response("Forbidden", { status: 403 });
+        if (!/^https?:$/.test(target.protocol)) {
+          return new Response("Forbidden Protocol", { status: 403 });
         }
 
         const range = request.headers.get("range");
