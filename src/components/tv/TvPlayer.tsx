@@ -45,8 +45,8 @@ export function TvPlayer({
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    const url = proxy(src);
     const isHls = src.includes(".m3u8");
+    const url = isHls ? proxy(src) : src;
     let destroy: (() => void) | undefined;
     setError(null);
     setLoading(true);
