@@ -2,8 +2,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, Loader2, Pause, Play, RotateCcw, RotateCw } from "lucide-react";
 import { Focusable } from "./Focusable";
 
-function proxy(url: string) {
-  return `/api/public/stream?u=${encodeURIComponent(url)}`;
+export function proxy(url: string) {
+  if (url.startsWith("/")) return url;
+  return `/api/stream?u=${encodeURIComponent(url)}`;
 }
 
 function fmt(seconds: number) {
