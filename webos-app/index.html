@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LG IPTV Player</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        background: #0f1014;
+        color: #fff;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        overflow: hidden;
+      }
+      #loading {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        z-index: 10;
+      }
+      #loading img {
+        width: 8rem;
+        height: 8rem;
+        border-radius: 1.5rem;
+      }
+      #loading p {
+        font-size: 1.25rem;
+        color: #9ca3af;
+      }
+      #error {
+        position: absolute;
+        inset: 0;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        padding: 2rem;
+        text-align: center;
+        z-index: 20;
+      }
+      #error h1 {
+        font-size: 2rem;
+        color: #fff;
+      }
+      #error p {
+        font-size: 1.25rem;
+        color: #9ca3af;
+        max-width: 40rem;
+      }
+      #app-frame {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loading">
+      <img src="icon_512.png" alt="LG IPTV Player" />
+      <p>Carregando seu conteúdo...</p>
+    </div>
+
+    <div id="error">
+      <h1>Não foi possível abrir o app</h1>
+      <p>
+        Verifique se o app está publicado e se a URL em <code>webos-app/config.js</code>
+        está correta. Em seguida, empacote e instale novamente.
+      </p>
+    </div>
+
+    <iframe id="app-frame" allow="fullscreen; autoplay; encrypted-media" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-presentation"></iframe>
+
+    <script src="config.js"></script>
+    <script>
+      (function () {
+        const frame = document.getElementById("app-frame");
+        const loading = document.getElementById("loading");
+        const error = document.getElementById("error");
+
+        if (!window.WEBOS_APP_URL || window.WEBOS_APP_URL === "PUBLISH_URL_HERE") {
+          loading.style.display = "none";
+          error.style.display = "flex";
+          return;
+        }
+
+        frame.src = window.WEBOS_APP_URL;
+
+        frame.onload = function () {
+          loading.style.display = "none";
+        };
+
+        frame.onerror = function () {
+          loading.style.display = "none";
+          error.style.display = "flex";
+        };
+
+        // Forward webOS back button to iframe if possible; otherwise rely on outer window.
+        document.addEventListener("keydown", function (event) {
+          const code = event.keyCode || event.which;
+          if (code === 461 || event.key === "Backspace" || event.key === "GoBack") {
+            // Try to send back to iframe content first
+            try {
+              frame.contentWindow.postMessage({ type: "webos-back" }, "*");
+            } catch (e) {
+              // ignore cross-origin restrictions
+            }
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

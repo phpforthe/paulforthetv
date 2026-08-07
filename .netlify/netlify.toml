@@ -1,0 +1,36 @@
+plugins = []
+functionsDirectory = "C:\\Users\\Admi5\\.gemini\\antigravity\\scratch\\lg-smart-stream-web\\.netlify\\functions-internal"
+functionsDirectoryOrigin = "config-v1"
+redirects = []
+
+[functions]
+
+[functions."*"]
+
+[build]
+publish = "C:\\Users\\Admi5\\.gemini\\antigravity\\scratch\\lg-smart-stream-web\\dist"
+publishOrigin = "config"
+commandOrigin = "config"
+base = "C:\\Users\\Admi5\\.gemini\\antigravity\\scratch\\lg-smart-stream-web"
+command = "echo 'skipping build'"
+functions = "C:\\Users\\Admi5\\.gemini\\antigravity\\scratch\\lg-smart-stream-web\\.netlify\\functions-internal"
+
+[build.environment]
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
+
+[[headers]]
+for = "/assets/*"
+
+[headers.values]
+cache-control = "public, max-age=31536000, immutable"

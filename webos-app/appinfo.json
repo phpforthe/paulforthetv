@@ -1,0 +1,20 @@
+{
+  "id": "com.lg.iptv.terezinhaconceicao",
+  "version": "1.0.0",
+  "vendor": "LG IPTV Player",
+  "type": "web",
+  "main": "index.html",
+  "title": "LG IPTV Player",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "iconColor": "#0F1014",
+  "splashBackground": "#0F1014",
+  "bgImage": "bg_image.png",
+  "imageForRecents": "splash.png",
+  "disableBackHistoryAPI": false,
+  "requiredPermissions": [
+    "com.webos.service.networkinput",
+    "com.webos.service.applicationManager"
+  ],
+  "handlesRelaunch": true
+}
